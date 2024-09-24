@@ -4,7 +4,7 @@ import util
 
 
 def get_nfl_player_data():
-    seasons = list(range(datetime.now().year - 5, datetime.now().year))
+    seasons = list(range(datetime.now().year - util.years_back, datetime.now().year))
 
     print('>>> Getting PBP Data')
     for s in seasons:
@@ -14,35 +14,47 @@ def get_nfl_player_data():
 
     print('>>> Getting NGS Data')
     for type in ['passing', 'rushing', 'receiving']:
-        data = nfl.import_ngs_data(type, seasons)
-        filename = type + '_ngs_data.csv'
-        util.write_data_file(data, filename)
+        for s in seasons:
+            data = nfl.import_ngs_data(type, [s])
+            filename = str(s) + '_ngs_data.csv'
+            util.write_data_file(data, filename)
 
     print('>>> Getting QBR Data')
-    data = nfl.import_qbr(seasons)
-    util.write_data_file(data, 'qbr_data.csv')
-
-    print('>>> Getting Seasonal PFR Data')
-    for type in ['pass', 'rush', 'rec']:
-        data = nfl.import_seasonal_pfr(type, seasons)
-        filename = type + '_seasonal_pfr_data.csv'
+    for s in seasons:
+        data = nfl.import_qbr([s])
+        filename = str(s) + '_qbr_data.csv'
         util.write_data_file(data, filename)
 
-    print('>>> Getting Weekly PFR Data')
-    for type in ['pass', 'rush', 'rec']:
-        data = nfl.import_weekly_pfr(type, seasons)
-        filename = type + '_weekly_pfr_data.csv'
+    print('>>> (skip) Getting Seasonal PFR Data')
+    #     as of 2024 - PFR data is only through 2023 - probably since they changed the structure of their site - broke the scraper?
+    print('>>> (skip) Getting Weekly PFR Data')
+    #     as of 2024 - PFR data is only through 2023 - probably since they changed the structure of their site - broke the scraper?
+
+    print('>>> Getting Weekly Data')
+    for s in seasons:
+        data = nfl.import_weekly_data([s])
+        filename = str(s) + '_weekly_data.csv'
         util.write_data_file(data, filename)
 
+    print('>>> Getting Seasonal Data')
+    for s in seasons:
+        data = nfl.import_weekly_data([s])
+        filename = str(s) + '_seasonal_data.csv'
+        util.write_data_file(data, filename)
 
     print('>>> Getting Snap Count Data')
-    data = nfl.import_snap_counts(seasons)
-    util.write_data_file(data, 'snap_counts.csv')
+    for s in seasons:
+        data = nfl.import_snap_counts([s])
+        filename = str(s) + '_snap_counts.csv'
+        util.write_data_file(data, filename)
 
     print('>>> Getting FTN Chart Data')
     seasons = list(range(2022, datetime.now().year))
-    data = nfl.import_ftn_data(seasons)
-    util.write_data_file(data, 'ftn_data.csv')
+    for s in seasons:
+        data = nfl.import_ftn_data([s])
+        filename = str(s) + '_ftn_data.csv'
+        util.write_data_file(data, filename)
+
 
 if __name__=="__main__":
     get_nfl_player_data()

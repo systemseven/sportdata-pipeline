@@ -4,11 +4,13 @@ import util
 
 
 def get_nfl_team_data():
-    seasons = list(range(datetime.now().year - 5, datetime.now().year))
+    seasons = list(range(datetime.now().year - util.years_back, datetime.now().year))
 
     print('>>> Getting Schedule Data')
-    schedule = nfl.import_schedules(seasons)
-    util.write_data_file(schedule, 'schedule.csv')
+    for s in seasons:
+        data = nfl.import_schedules([s])
+        filename = str(s) + '_schedule.csv'
+        util.write_data_file(data, filename)
 
 if __name__=="__main__":
     get_nfl_team_data()

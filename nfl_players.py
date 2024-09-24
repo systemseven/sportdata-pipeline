@@ -11,21 +11,29 @@ def get_nfl_player_data():
     util.write_data_file(data, 'players.csv')
 
     print('>>> Getting Injury Data')
-    data = nfl.import_injuries(seasons)
-    util.write_data_file(data, 'injuries.csv')
+    for s in seasons:
+        data = nfl.import_injuries([s])
+        filename = str(s) + '_injuries.csv'
+        util.write_data_file(data, filename)
 
 
     print('>>> Getting Official Data')
-    data = nfl.import_officials(seasons)
-    util.write_data_file(data, 'officials.csv')
+    for s in seasons:
+        data = nfl.import_officials([s])
+        filename = str(s) + '_injuries.csv'
+        util.write_data_file(data, filename)
 
     print('>>> Getting Weekly Roster Data')
-    data = nfl.import_weekly_rosters(seasons)
-    util.write_data_file(data, 'weekly_roster.csv')
+    for s in seasons:
+        data = nfl.import_weekly_rosters([s])
+        filename = str(s) + '_weekly_roster.csv'
+        util.write_data_file(data, filename)
 
     print('>>> Getting Season Roster Data')
-    data = nfl.import_seasonal_rosters(seasons)
-    util.write_data_file(data, 'seasonal_roster.csv')
+    for s in seasons:
+        data = nfl.import_seasonal_rosters([s])
+        filename = str(s) + '_seasonal_roster.csv'
+        util.write_data_file(data, filename)
 
 if __name__=="__main__":
     get_nfl_player_data()
