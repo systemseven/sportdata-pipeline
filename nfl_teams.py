@@ -11,8 +11,10 @@ def get_nfl_team_data():
     util.write_data_file(team_desc, 'teams.csv')
 
     print('>>> Getting Depth Charts')
-    data = nfl.import_depth_charts(seasons)
-    util.write_data_file(data, 'depth_charts.csv')
+    for s in seasons:
+        data = nfl.import_depth_charts([s])
+        filename = str(s) + '_depth_charts.csv'
+        util.write_data_file(data, filename)
 
 if __name__=="__main__":
     get_nfl_team_data()
