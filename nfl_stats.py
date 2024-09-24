@@ -7,8 +7,10 @@ def get_nfl_player_data():
     seasons = list(range(datetime.now().year - 5, datetime.now().year))
 
     print('>>> Getting PBP Data')
-    data = nfl.import_pbp_data(seasons)
-    util.write_data_file(data, 'pbp_data.csv')
+    for s in seasons:
+        data = nfl.import_pbp_data([s])
+        filename = str(s) + '_pbp_data.csv'
+        util.write_data_file(data, filename)
 
     print('>>> Getting NGS Data')
     for type in ['passing', 'rushing', 'receiving']:
