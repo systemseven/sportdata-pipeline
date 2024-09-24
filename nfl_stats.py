@@ -4,7 +4,7 @@ import util
 
 
 def get_nfl_player_data():
-    seasons = list(range(datetime.now().year - util.years_back, datetime.now().year))
+    seasons = list(range(datetime.now().year - util.years_back, datetime.now().year + 1))
 
     print('>>> Getting PBP Data')
     for s in seasons:
@@ -25,10 +25,19 @@ def get_nfl_player_data():
         filename = str(s) + '_qbr_data.csv'
         util.write_data_file(data, filename)
 
-    print('>>> (skip) Getting Seasonal PFR Data')
-    #     as of 2024 - PFR data is only through 2023 - probably since they changed the structure of their site - broke the scraper?
+    print('>>> Getting Seasonal PFR Data')
+    for type in ['pass', 'rush', 'rec']:
+        for s in seasons:
+            data = nfl.import_seasonal_pfr(type, [s])
+            filename = str(s) + '_seasonal_pfr.csv'
+            util.write_data_file(data, filename)
+
     print('>>> (skip) Getting Weekly PFR Data')
-    #     as of 2024 - PFR data is only through 2023 - probably since they changed the structure of their site - broke the scraper?
+    for type in ['pass', 'rush', 'rec']:
+        for s in seasons:
+            data = nfl.import_weekly_pfr(type, [s])
+            filename = str(s) + '_weekly_pfr.csv'
+            util.write_data_file(data, filename)
 
     print('>>> Getting Weekly Data')
     for s in seasons:

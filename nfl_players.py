@@ -4,7 +4,7 @@ import util
 
 
 def get_nfl_player_data():
-    seasons = list(range(datetime.now().year - 5, datetime.now().year))
+    seasons = list(range(datetime.now().year - 5, datetime.now().year + 1))
 
     print('>>> Getting Player IDs')
     data = nfl.import_ids()

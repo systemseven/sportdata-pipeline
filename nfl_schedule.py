@@ -4,7 +4,7 @@ import util
 
 
 def get_nfl_team_data():
-    seasons = list(range(datetime.now().year - util.years_back, datetime.now().year))
+    seasons = list(range(datetime.now().year - util.years_back, datetime.now().year + 1))
 
     print('>>> Getting Schedule Data')
     for s in seasons:
