@@ -1,0 +1,58 @@
+name: Update NFL Data
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "15 */6 * 8-12,1-2 *"
+
+jobs:
+  pipeline:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        pyton-version: ["3.12"]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install PIP Dependencies
+        run: |
+          python -m pip install -r requirements.txt
+
+      - name: Get Player Data
+        run: |
+          python nfl_players.py
+
+      - name: Get Schedule Data
+        run: |
+          python nfl_schedule.py
+
+      - name: Get Team Data
+        run: |
+          python nfl_teams.py
+
+      - name: Get Stat Data
+        run: |
+          python nfl_stats_data.py
+
+#      doesn't have up to date data right now
+#      - name: Get Odds Data
+#        run: |
+#          python nfl_odds.py
+
+      - name: Commit Data Files
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add -A
+          git commit -m "update NFL data" -a
+
+      - name: push changes
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: main
