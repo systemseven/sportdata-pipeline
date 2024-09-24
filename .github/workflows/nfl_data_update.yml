@@ -37,7 +37,7 @@ jobs:
 
       - name: Get Stat Data
         run: |
-          python nfl_stats_data.py
+          python nfl_stats.py
 
 #      doesn't have up to date data right now
 #      - name: Get Odds Data
