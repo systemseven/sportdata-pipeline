@@ -47,7 +47,7 @@ def get_nfl_player_data():
 
     print('>>> Getting Seasonal Data')
     for s in seasons:
-        data = nfl.import_weekly_data([s])
+        data = nfl.import_seasonal_data([s])
         filename = str(s) + '_seasonal_data.csv'
         util.write_data_file(data, filename)
 
