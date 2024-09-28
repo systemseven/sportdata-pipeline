@@ -41,6 +41,38 @@ def parlay():
     stats_df['receptions_pg'] = round(stats_df['receptions'] / stats_df['games'], 1)
     stats_df['pass_attempt_pg'] = round(stats_df['targets'] / stats_df['games'], 1)
 
+    # stats_df.replace(0, np.nan, inplace=True)
+    final_columns = {
+        'first_name': 'First Name',
+        'last_name': 'Last Name',
+        'position': 'Position',
+        'team_abbr': 'Team',
+        'completions': 'Completions',
+        'attempts': 'Pass Attempts',
+        'carries': 'Rush Attempts',
+        'passing_yards': 'Pass Yards',
+        'passing_tds': 'Pass TDs',
+        'rushing_yards': 'Rush Yards',
+        'interceptions': 'Int',
+        'receptions': 'Receptions',
+        'targets': 'Targets',
+        'receiving_yards': 'Rec Yards',
+        'receiving_tds': 'Rec TDs',
+        'games': 'Games',
+        'td_pg' : 'TD PG',
+        'pass_yards_pg': 'Pass Yards PG',
+        'pass_attempts_pg': 'Pass Attempt PG',
+        'pass_completions_pg': 'Pass Comp PG',
+        'interceptions_pg': 'Int PG',
+        'rush_yards_pg': 'Rush Yard PG',
+        'rush_attempt_pg': 'Rush Attempt PG',
+        'rec_yards_pg': 'Rec Yards PG',
+        'receptions_pg': 'Receptions PG',
+        'pass_attempt_pg': 'Pass Attempt PG',
+    }
+    stats_df = stats_df.rename(columns=final_columns)
+    print(stats_df.head(10))
+
     util.write_data_file(stats_df, 'parlay_data.csv')
 
 
